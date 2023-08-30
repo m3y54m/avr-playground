@@ -9,11 +9,10 @@ TXD (PD1) ---> TTL Serial Port RX
       GND <--- TTL Serial Port GND
 */
 
-#include <stdio.h>
-#include <math.h>
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <util/setbaud.h>
+#include <stdio.h>
 
 // UART0 basic functions
 void uart0_init(void);
