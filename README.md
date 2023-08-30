@@ -1,2 +1,2 @@
-# avr-playground
-My AVR Programming Playground
+# My AVR Programming Playground 
+
