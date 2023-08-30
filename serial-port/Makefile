@@ -1,4 +1,4 @@
-PROGRAM_NAME = hello
+PROGRAM_NAME = main
 SRC_DIR = src
 BUILD_DIR = build
 
