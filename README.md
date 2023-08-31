@@ -1,4 +1,4 @@
-# My AVR Programming Playground 
+# AVR Programming Playground 
 
 This is my playground repository for AVR programming where I rewrite my old AVR programs and practice basic embedded programming skills.
 
@@ -11,15 +11,18 @@ To prepare your build environment read this tutorial:
 
 ## [Serial Port](01-serial-port)
 
-Redirect STDIO streams to UART0 input and output so that you can write to serial port using printf() and read using scanf()
+Redirect STDIO streams to UART0 input and output so that you can write to serial port using `printf()` and read using `scanf()`
 
 ## [Precise Timing](02-precise-timing)
 
-Implement precise timing functions millis(), micros(), precise_delay_ms(), precise_delay_us()
+Implement precise timing functions `millis()`, `micros()`, `precise_delay_ms()`, `precise_delay_us()`
 
 ## [HY-SRF05 Ultrasonic Sensor](03-hy-srf05-sensor)
 
 Test HY-SRF05 ultrasonic sensor using my `precise_timing` library.
+
+![motion-pinout](https://github.com/m3y54m/avr-playground/assets/1549028/b5a98cea-d2ce-4b3a-b8fd-65c0a5b4f2f7)
+
 
 ## Resources
 
