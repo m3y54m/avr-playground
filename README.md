@@ -9,6 +9,11 @@ To prepare your build environment read this tutorial:
 
 - [Getting started with AVR programming](https://github.com/m3y54m/start-avr)
 
+
+## [Blinky](00-blinky)
+
+Blinky is the "Hello World!" of embedded systems :)
+
 ## [Serial Port](01-serial-port)
 
 Redirect STDIO streams to UART0 input and output so that you can write to serial port using `printf()` and read using `scanf()`
