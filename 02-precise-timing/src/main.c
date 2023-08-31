@@ -34,8 +34,6 @@ void main(void)
 
   DDRB |= (1 << PB0);
 
-  unsigned long last_millis = millis();
-
   while (1)
   {
     // Create 1 second delay using precise_delay_us()
