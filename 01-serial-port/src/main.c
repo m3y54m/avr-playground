@@ -5,15 +5,23 @@ TXD (PD1) ---> TTL Serial Port RX
       GND <--- TTL Serial Port GND
 */
 
-#include <avr/pgmspace.h>
-#include "my/uart.h"
+// Project common config and definitions
+// NOTE: put this before other includes
+#include "my/project_config.h"
 
-int main(void)
+#include <avr/pgmspace.h>
+#include "my/serial_port.h"
+
+void main(void)
 {
-  // Initialize UART0
-  uart0_init();
+  // initialize uart0 to use printf()
+  serial_port_init();
 
   printf("Hello World!\r\n");
+
+  float pi = 3.14159265359;
+
+  printf("\r\nThis is a floating point number: %f\r\n", pi);
 
   while (1)
   {
