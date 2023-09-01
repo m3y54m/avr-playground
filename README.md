@@ -6,9 +6,11 @@ To prepare your build environment first read this tutorial:
 
 - [Getting started with AVR programming](https://github.com/m3y54m/start-avr)
 
-All of the projects in this repository are written for Atmega328 on Arduino Uno / Nano.
+All of the programs in this repository are written for Atmega328 on Arduino Uno / Nano but **without using Arduno Core and libraries**.
 I used the Arduino bootloader on Atmega328 and AVRDUDE to write my programs on Atmega328. So there is no need 
 for any external programmer.
+
+![Arduino-uno-pinout](https://github.com/m3y54m/avr-playground/assets/1549028/a49ab57c-9edf-4b41-9790-9e601848c7b7)
 
 Note that **Atmega328** is an old device and ***NOT RECOMMENDED FOR NEW DESIGNS***. I am using it only to practice programming.
 
