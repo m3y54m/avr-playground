@@ -4,7 +4,7 @@ RXD (PD0) <--- TTL Serial Port TX
 TXD (PD1) ---> TTL Serial Port RX
       GND <--- TTL Serial Port GND
 
-      PB0 ---> LED
+      PB5 ---> LED
 */
 
 // Project common config and definitions
@@ -32,7 +32,7 @@ void main(void)
 
   sei(); // Enables interrupts by setting the global interrupt mask
 
-  DDRB |= (1 << PB0);
+  DDRB |= (1 << PB5);
 
   while (1)
   {
@@ -42,7 +42,7 @@ void main(void)
       precise_delay_us(100);
     }
 
-    PORTB ^= (1 << PB0); // Turn on / Turn off the LED
+    PORTB ^= (1 << PB5); // Turn on / Turn off the LED
     printf("millis = %lu\r\n", millis());
   }
 }

@@ -3,7 +3,7 @@
 RXD (PD0) <--- TTL Serial Port TX
 TXD (PD1) ---> TTL Serial Port RX
 
-      PB0 ---> LED
+      PB5 ---> LED
 
       PB1 ---> HY-SRF05 Trigger
       PB2 <--- HY-SRF05 Echo
@@ -35,7 +35,7 @@ void main(void)
   sei(); // Enables interrupts by setting the global interrupt mask
 
   // LED pin as output
-  DDRB |= (1 << PB0);
+  DDRB |= (1 << PB5);
 
   // Trigger pin as output
   DDRB |= (1 << PB1);
@@ -52,13 +52,13 @@ void main(void)
     loop_until_bit_is_set(PINB, PB2); // while (Echo == 0);
     const unsigned int start_us = micros();
 
-    PORTB ^= (1 << PB0); // Toggle the LED
+    PORTB ^= (1 << PB5); // Toggle the LED
 
     // Wait for the falling edge of "Echo" input signal 
     loop_until_bit_is_clear(PINB, PB2); // while (Echo == 1);
     const unsigned int stop_us = micros();
 
-    PORTB ^= (1 << PB0); // Toggle the LED
+    PORTB ^= (1 << PB5); // Toggle the LED
 
     unsigned int duration = stop_us - start_us;
     float distance = duration / 58.0f;

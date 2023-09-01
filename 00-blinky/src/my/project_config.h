@@ -6,6 +6,6 @@
 // Device name
 #define __AVR_ATmega328P__
 // CPU main clock frequency in Hz
-#define F_CPU 8000000UL
+#define F_CPU 16000000UL
 
 #endif // __PROJECT_CONFIG_H__

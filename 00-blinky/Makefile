@@ -2,6 +2,10 @@ SRC_DIR = src
 LIB_DIR = $(SRC_DIR)/my
 BUILD_DIR = build
 
+# Put your Arduino serial port name on your PC
+# It should be something like /dev/ttyxxxx in Linux and something like COMx in Windows
+ARDUINO_SERIAL_PORT_NAME = COM10
+
 # The CC variable typically represents the C compiler that will be used during the
 # compilation process. By assigning avr-gcc to CC, it indicates that the avr-gcc
 # compiler is being used for compiling the C source files in the project.
@@ -52,7 +56,32 @@ program.hex: $(BUILD_DIR) main.o
 
 # upload the built program (hex file) to Atmega328P using USBasp
 upload: program.hex
-	avrdude -c usbasp-clone -p m328p -U flash:w:$(BUILD_DIR)/program.hex
+	avrdude -c arduino -p m328p -P $(ARDUINO_SERIAL_PORT_NAME) -b 115200 -U flash:w:$(BUILD_DIR)/program.hex
+# avrdude:
+# The command-line tool used for programming AVR microcontrollers.
+
+# -c arduino:
+# Specifies the programmer type. In this case, it indicates that an Arduino board
+# is being used as the programmer. The specific programmer type may vary depending
+# on the hardware setup.
+
+# -p m328p:
+# Specifies the target AVR microcontroller model. Here, it's set to m328p, which corresponds
+# to the ATmega328P microcontroller.
+
+# -P $(ARDUINO_SERIAL_PORT_NAME):
+# Specifies the communication port to which the programmer (Arduino board) is connected.
+# The actual port number may vary depending on your system configuration.
+
+# -b 115200:
+# Sets the baud rate for communication between the computer and the programmer. The baud rate
+# is set to 115200 bits per second in this case. Adjust this value based on your specific setup
+# if needed.
+
+# -U flash:w:$(BUILD_DIR)/program.hex:
+# Specifies the action to be performed by avrdude. In this case, it is set to
+# write the contents of the program.hex file to the flash memory (flash:w:) of the microcontroller.
+# The program.hex file is located in the build directory.
 
 # Remove build directory with all built files
 clean:

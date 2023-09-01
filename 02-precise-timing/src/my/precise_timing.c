@@ -16,9 +16,9 @@ can be modified unexpectedly, and the compiler should not make assumptions
 about its value or optimize accesses to it.
 */
 
-// With f_timer1 = 1 Mhz, each timer1 count takes 1 microsecond
+// With f_timer1 = 2 Mhz, each timer1 count takes 0.5 microsecond
 // when timer1 gets this value, 1ms has passed
-static const unsigned int CTC_THRESHOLD = 999;
+static const unsigned int CTC_THRESHOLD = 1999;
 
 ISR(TIMER1_COMPA_vect)
 {
@@ -27,12 +27,12 @@ ISR(TIMER1_COMPA_vect)
 
 void precise_timing_init(void)
 {
-  // Configure Timer1 to count from 0 to 999 with 1Mhz frequency:
+  // Configure Timer1 to count from 0 to 1999 with 2Mhz frequency:
   // WGM1 = 0100 => Enable CTC mode (Clears timer when timer counter equals to the value of OCR1A)
   // CS1  =  010 => Set clock divisor to 8
   TCCR1B |= (1 << WGM12) | (1 << CS11);
 
-  // Assuming that (F_CPU = 8Mhz) => (f_timer1 = 1 Mhz)
+  // Assuming that (F_CPU = 16Mhz) => (f_timer1 = 2 Mhz)
   const unsigned int f_timer1 = (F_CPU / 8); // clock divisor = 8
 
   // high byte first, then low byte
@@ -56,7 +56,7 @@ unsigned long millis(void)
 
 unsigned long micros(void)
 {
-  return millis() * 1000 + TCNT1;
+  return millis() * 1000 + (TCNT1 / 2); // Each counting of TCNT1 takes 0.5 microsecond
 }
 
 void precise_delay_ms(unsigned long ms)
@@ -79,7 +79,7 @@ void precise_delay_ms(unsigned long ms)
 
 void precise_delay_us(unsigned char us)
 {
-  // According to timer1 configurations, TCNT1 counts from 0 to 999 repeatedly
+  // According to timer1 configurations, TCNT1 counts from 0 to 1999 repeatedly
 
   const unsigned int start_us = TCNT1;
 
@@ -94,6 +94,8 @@ void precise_delay_us(unsigned char us)
     {
       diff_us = diff_us + CTC_THRESHOLD + 1;
     }
+
+    diff_us = diff_us / 2; // Each counting of TCNT1 takes 0.5 microsecond
 
     if (diff_us >= us)
     {
