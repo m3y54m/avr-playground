@@ -6,7 +6,7 @@ To prepare your build environment first read this tutorial:
 
 - [Getting started with AVR programming](https://github.com/m3y54m/start-avr)
 
-All of the programs in this repository are written for Atmega328 on Arduino Uno / Nano but **without using Arduno Core and libraries**.
+All of the programs in this repository are written for Atmega328 on Arduino Uno / Nano but **without using Arduino Core** and just in bare-metal.
 I used the Arduino bootloader on Atmega328 and AVRDUDE to write my programs on Atmega328. So there is no need 
 for any external programmer.
 
@@ -68,4 +68,5 @@ Emulate a 20PPR incremental (quadrature) rotary encoder using TIMER0 and TIMER2 
 - [avr-libc - A simple project](https://www.nongnu.org/avr-libc/user-manual/group__demo__project.html)
 - [avr-libc - How to Build a Library ](https://www.nongnu.org/avr-libc/user-manual/library.html)
 - [avr-millis-function](https://github.com/monoclecat/avr-millis-function)
+- [Nested Interrupts](https://ucexperiment.wordpress.com/2013/05/20/nested-interrupts/)
 
