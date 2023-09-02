@@ -34,20 +34,25 @@ Implement precise timing functions `millis()`, `micros()`, `precise_delay_ms()`,
 
 Test HY-SRF05 ultrasonic sensor using my `precise_timing` library.
 
-![motion-pinout](https://github.com/m3y54m/avr-playground/assets/1549028/b5a98cea-d2ce-4b3a-b8fd-65c0a5b4f2f7)
+![image](https://github.com/m3y54m/avr-playground/assets/1549028/36f09749-cb5a-435f-aae5-30f6b80a32a2)
 
 - [SRF05 - Ultra-Sonic Ranger](http://www.robot-electronics.co.uk/htm/srf05tech.htm)
 
 ## [Quadrature Rotary Encoder](04-rotary-encoder)
 
+![image](https://github.com/m3y54m/avr-playground/assets/1549028/15d60fc0-2a20-49a8-9574-ae9115776be7)
+
 Test a 20PPR incremental (quadrature) rotary encoder. A quadrature encoder gives 4x resolution using this method.
 External interrupts (INT0 and INT1) are used for decoding the encoder signals.
 
+![image](https://github.com/m3y54m/avr-playground/assets/1549028/aa2f9b30-1cdc-42c7-b92f-8844fbea0968)
+
 - [Optical Quadrature Encoders](https://www.quantumdev.com/why-use-an-optical-quadrature-encoder-for-a-motor-encoder/)
+- [How Rotary Encoder Works and Interface It with Arduino](https://lastminuteengineers.com/rotary-encoder-arduino-tutorial/)
 
-## [Quadrature Rotary Encoder](05-rotary-encoder-emulator)
+## [Quadrature Rotary Encoder Emulator](05-rotary-encoder-emulator)
 
-Emulate a 20PPR incremental (quadrature) rotary encoder using TIMER0 and TIMER2 outputs.
+Emulate a 20PPR incremental (quadrature) rotary encoder using TIMER0 and TIMER2 outputs and decode the generated signals. Decoded speed should be 91 RPM (122 pulses per second).
 
 - [Output 2 PWM waveforms with 90 degree phase shift](https://electronics.stackexchange.com/questions/174656/output-2-pwm-waveforms-with-90-degree-phase-shift)
 
