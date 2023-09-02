@@ -10,7 +10,7 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-void main(void)
+int main(void)
 {
   // Configure LED pin as output
   DDRB |= (1 << PB5);
@@ -21,4 +21,6 @@ void main(void)
 
     _delay_ms(1000); // Wait for 1 second
   }
+
+  return 0;
 }

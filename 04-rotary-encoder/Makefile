@@ -41,7 +41,7 @@ CFLAGS = -Wall -Os -mmcu=atmega328p -std=gnu99
 # Linker Options
 
 # -Wl,-u,vfprintf:
-# This flag passes the -u vfprintf option to the linker ($(CC)). It specifies that the symbol
+# This flag passes the -u vfprintf option to the linker (avr-gcc). It specifies that the symbol
 # vfprintf should be treated as an unresolved symbol, allowing it to be resolved by the standard
 # library implementation. This is necessary for enabling formatted printing functions like printf
 # to work correctly.

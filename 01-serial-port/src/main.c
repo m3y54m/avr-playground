@@ -12,7 +12,7 @@ TXD (PD1) ---> TTL Serial Port RX
 #include <avr/pgmspace.h>
 #include "my/serial_port.h"
 
-void main(void)
+int main(void)
 {
   // initialize uart0 to use printf()
   serial_port_init();
@@ -35,4 +35,6 @@ void main(void)
     // print scanned character and its code
     printf("\r\nYou pressed: %c (ASCII Code = %u)\r\n", input_byte, input_byte);
   }
+
+    return 0;
 }

@@ -31,26 +31,47 @@ CC = avr-gcc
 # information to set the appropriate processor-specific options and generate code
 # tailored for the specified microcontroller.
 
-# -std=c99:
+# -std=gnu99:
 # This flag sets the C language standard to C99. It instructs the compiler to use the C99
 # standard for language features and syntax. The C99 standard introduced several new
 # features and improvements over previous versions of the C language.
 
-CFLAGS = -Wall -Os -mmcu=atmega328p -std=c99
+CFLAGS = -Wall -Os -mmcu=atmega328p -std=gnu99
+
+# Define MK_DIR based on the operating system or environment in which the Makefile is being executed
+ifdef SystemRoot
+	MK_DIR = mkdir
+else
+	ifeq ($(shell uname), Linux)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), CYGWIN)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), MINGW32)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), MINGW64)
+		MK_DIR = mkdir -pv
+	endif
+endif
 
 all: program.hex
 
 # create the build directory
 $(BUILD_DIR):
-	mkdir -pv $(BUILD_DIR)
+	$(MK_DIR) $(BUILD_DIR)
 
 # create the object file for main.c
 main.o: $(BUILD_DIR)
-	avr-gcc $(CFLAGS) -o $(BUILD_DIR)/main.o -c $(SRC_DIR)/main.c
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/main.o -c $(SRC_DIR)/main.c
 
 # build the program in hex format for Atmega328P
 program.hex: $(BUILD_DIR) main.o
-	avr-gcc $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/program.elf $(BUILD_DIR)/main.o
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/program.elf $(BUILD_DIR)/main.o
 	avr-objcopy -j .text -j .data -O ihex $(BUILD_DIR)/program.elf $(BUILD_DIR)/program.hex
 	avr-size --format=avr --mcu=atmega328p $(BUILD_DIR)/program.elf
 

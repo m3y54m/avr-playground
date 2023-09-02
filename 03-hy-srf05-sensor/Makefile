@@ -31,17 +31,17 @@ CC = avr-gcc
 # information to set the appropriate processor-specific options and generate code
 # tailored for the specified microcontroller.
 
-# -std=c99:
+# -std=gnu99:
 # This flag sets the C language standard to C99. It instructs the compiler to use the C99
 # standard for language features and syntax. The C99 standard introduced several new
 # features and improvements over previous versions of the C language.
 
-CFLAGS = -Wall -Os -mmcu=atmega328p -std=c99
+CFLAGS = -Wall -Os -mmcu=atmega328p -std=gnu99
 
 # Linker Options
 
 # -Wl,-u,vfprintf:
-# This flag passes the -u vfprintf option to the linker (avr-gcc). It specifies that the symbol
+# This flag passes the -u vfprintf option to the linker ($(CC)). It specifies that the symbol
 # vfprintf should be treated as an unresolved symbol, allowing it to be resolved by the standard
 # library implementation. This is necessary for enabling formatted printing functions like printf
 # to work correctly.
@@ -58,29 +58,50 @@ CFLAGS = -Wall -Os -mmcu=atmega328p -std=c99
 
 LDFLAGS = -Wl,-u,vfprintf -lprintf_flt -lm
 
+# Define MK_DIR based on the operating system or environment in which the Makefile is being executed
+ifdef SystemRoot
+	MK_DIR = mkdir
+else
+	ifeq ($(shell uname), Linux)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), CYGWIN)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), MINGW32)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), MINGW64)
+		MK_DIR = mkdir -pv
+	endif
+endif
+
 all: program.hex
 
 # create the build directory
 $(BUILD_DIR):
-	mkdir -pv $(BUILD_DIR)
+	$(MK_DIR) $(BUILD_DIR)
 
 # create the static library for serial_port.c
 libserial_port.a: $(BUILD_DIR)
-	avr-gcc $(CFLAGS) -o $(BUILD_DIR)/serial_port.o -c $(LIB_DIR)/serial_port.c
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/serial_port.o -c $(LIB_DIR)/serial_port.c
 	avr-ar rcs $(BUILD_DIR)/libserial_port.a $(BUILD_DIR)/serial_port.o
 
 # create the static library for precise_timing.c
 libprecise_timing.a: $(BUILD_DIR)
-	avr-gcc $(CFLAGS) -o $(BUILD_DIR)/precise_timing.o -c $(LIB_DIR)/precise_timing.c
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/precise_timing.o -c $(LIB_DIR)/precise_timing.c
 	avr-ar rcs $(BUILD_DIR)/libprecise_timing.a $(BUILD_DIR)/precise_timing.o
 	
 # create the object file for main.c
 main.o: $(BUILD_DIR)
-	avr-gcc $(CFLAGS) -o $(BUILD_DIR)/main.o -c $(SRC_DIR)/main.c
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/main.o -c $(SRC_DIR)/main.c
 
 # build the program in hex format for Atmega328P
 program.hex: $(BUILD_DIR) main.o libserial_port.a libprecise_timing.a
-	avr-gcc $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/program.elf $(BUILD_DIR)/main.o $(BUILD_DIR)/libserial_port.a $(BUILD_DIR)/libprecise_timing.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/program.elf $(BUILD_DIR)/main.o $(BUILD_DIR)/libserial_port.a $(BUILD_DIR)/libprecise_timing.a
 	avr-objcopy -j .text -j .data -O ihex $(BUILD_DIR)/program.elf $(BUILD_DIR)/program.hex
 	avr-size --format=avr --mcu=atmega328p $(BUILD_DIR)/program.elf
 

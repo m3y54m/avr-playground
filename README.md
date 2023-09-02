@@ -24,6 +24,8 @@ Blinky is the "Hello World!" of embedded systems :)
 
 Redirect STDIO streams to UART0 input and output so that you can write to serial port using `printf()` and read using `scanf()`
 
+**Note that if you are using Arduino Uno / Nano board, you do not need any external serial port to communicate with Atmega328, you can use the Arduino USB serial port to test the program. Just connect your board using USB port to your PC.**
+
 ## [Precise Timing](02-precise-timing)
 
 Implement precise timing functions `millis()`, `micros()`, `precise_delay_ms()`, `precise_delay_us()`
@@ -36,10 +38,25 @@ Test HY-SRF05 ultrasonic sensor using my `precise_timing` library.
 
 - [SRF05 - Ultra-Sonic Ranger](http://www.robot-electronics.co.uk/htm/srf05tech.htm)
 
+## [Quadrature Rotary Encoder](04-rotary-encoder)
+
+Test a 20PPR incremental (quadrature) rotary encoder. A quadrature encoder gives 4x resolution using this method.
+External interrupts (INT0 and INT1) are used for decoding the encoder signals.
+
+- [Optical Quadrature Encoders](https://www.quantumdev.com/why-use-an-optical-quadrature-encoder-for-a-motor-encoder/)
+
+## [Quadrature Rotary Encoder](05-rotary-encoder-emulator)
+
+Emulate a 20PPR incremental (quadrature) rotary encoder using TIMER0 and TIMER2 outputs.
+
+- [Output 2 PWM waveforms with 90 degree phase shift](https://electronics.stackexchange.com/questions/174656/output-2-pwm-waveforms-with-90-degree-phase-shift)
+
+
 ## Resources
 
 - [ATmega48A/PA/88A/PA/168A/PA/328/P Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf)
 - [Introduction to Bare Metal Programming in Arduino Uno](https://www.hackster.io/milanistef/introduction-to-bare-metal-programming-in-arduino-uno-f3e2b4)
+- [Developing with the 8-bit AVR® MCU](https://www.microchip.com/en-us/education/developer-help/learn-products/mcu-mpu/8bit-avr)
 - [Using Standard IO streams in AVR GCC](https://embedds.com/using-standard-io-streams-in-avr-gcc/)
 - [avr-libc - <stdio.h>: Standard IO facilities](https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html#stdio_without_malloc)
 - [How do I create a static library for the AVR Atmega328p?](https://electronics.stackexchange.com/questions/27325/how-do-i-create-a-static-library-for-the-avr-atmega328p)

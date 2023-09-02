@@ -14,13 +14,11 @@ TXD (PD1) ---> TTL Serial Port RX
 #include "my/project_config.h"
 
 #include <avr/io.h>
-#include <avr/interrupt.h>
 #include <util/delay.h>
-#include <util/atomic.h>
 #include "my/serial_port.h"
 #include "my/precise_timing.h"
 
-void main(void)
+int main(void)
 {
   // initialize uart0 to use printf()
   serial_port_init();
@@ -68,4 +66,6 @@ void main(void)
 
     _delay_ms(1000);
   }
+
+    return 0;
 }
