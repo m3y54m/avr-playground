@@ -64,6 +64,7 @@ Emulate a 20PPR incremental (quadrature) rotary encoder using TIMER0 and TIMER2 
 - [ATmega48A/PA/88A/PA/168A/PA/328/P Datasheet](https://ww1.microchip.com/downloads/en/DeviceDoc/ATmega48A-PA-88A-PA-168A-PA-328-P-DS-DS40002061B.pdf)
 - [Introduction to Bare Metal Programming in Arduino Uno](https://www.hackster.io/milanistef/introduction-to-bare-metal-programming-in-arduino-uno-f3e2b4)
 - [Developing with the 8-bit AVR® MCU](https://www.microchip.com/en-us/education/developer-help/learn-products/mcu-mpu/8bit-avr)
+- [Fundamentals of Microcontrollers - Arduino bare-metal breakdown](https://www.youtube.com/playlist?list=PLNyfXcjhOAwOF-7S-ZoW2wuQ6Y-4hfjMR)
 - [Using Standard IO streams in AVR GCC](https://embedds.com/using-standard-io-streams-in-avr-gcc/)
 - [avr-libc - <stdio.h>: Standard IO facilities](https://www.nongnu.org/avr-libc/user-manual/group__avr__stdio.html#stdio_without_malloc)
 - [How do I create a static library for the AVR Atmega328p?](https://electronics.stackexchange.com/questions/27325/how-do-i-create-a-static-library-for-the-avr-atmega328p)
