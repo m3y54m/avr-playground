@@ -12,6 +12,8 @@ for any external programmer.
 
 ![Arduino-uno-pinout](https://github.com/m3y54m/avr-playground/assets/1549028/a49ab57c-9edf-4b41-9790-9e601848c7b7)
 
+![Atmega328P Pinout](https://github.com/m3y54m/start-avr/assets/1549028/7c222c32-0c19-44ef-be49-052d2cd0fc68)
+
 Note that **Atmega328** is an old device and ***NOT RECOMMENDED FOR NEW DESIGNS***. I am using it only to practice programming.
 
 Almost all projects are configured for 16MHz external crystal on Arduino board. You can see each project's configuration in [`src/my/project_config.h`](00-blinky/src/my/project_config.h)
