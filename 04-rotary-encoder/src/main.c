@@ -40,7 +40,7 @@ int main(void)
   // initialize uart0 to use printf()
   serial_port_init();
 
-  // print project config
+  // print project config to serial port (USART)
   printf("F_CPU = %lu\r\n", F_CPU);
   printf("BAUD = %lu\r\n", BAUD);
 

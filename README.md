@@ -58,6 +58,13 @@ Emulate a 20PPR incremental (quadrature) rotary encoder using TIMER0 and TIMER2 
 
 - [Output 2 PWM waveforms with 90 degree phase shift](https://electronics.stackexchange.com/questions/174656/output-2-pwm-waveforms-with-90-degree-phase-shift)
 
+## [Measure VCC using ADC](06-adc-measure-vcc)
+
+Use ADC to measure VCC voltage without using any I/O pin or external component.
+
+- [AN2447: Measure VCC/Battery Voltage Without Using I/O Pin on tinyAVR and megaAVR](https://ww1.microchip.com/downloads/en/Appnotes/00002447A.pdf)
+- [AVR126: ADC of megaAVR® in Single-Ended Mode](http://ww1.microchip.com/downloads/en/AppNotes/00002538A.pdf)
+
 
 ## Resources
 
