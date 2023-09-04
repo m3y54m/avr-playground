@@ -65,6 +65,13 @@ Use ADC to measure VCC voltage without using any I/O pin or external component.
 - [AN2447: Measure VCC/Battery Voltage Without Using I/O Pin on tinyAVR and megaAVR](https://ww1.microchip.com/downloads/en/Appnotes/00002447A.pdf)
 - [AVR126: ADC of megaAVR® in Single-Ended Mode](http://ww1.microchip.com/downloads/en/AppNotes/00002538A.pdf)
 
+## [Precise Capacitance Meter](07-precise-capacitance-meter)
+
+Capacitance meter for 470uF to 18pF range with the highest accuracy for small capacitors.
+
+- [How to Make an Arduino Capacitance Meter](https://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/)
+- [RC Charging Circuit](https://www.electronics-tutorials.ws/rc/rc_1.html)
+- [RC Discharging Circuit](https://www.electronics-tutorials.ws/rc/rc_2.html)
 
 ## Resources
 

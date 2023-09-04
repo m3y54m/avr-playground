@@ -1,0 +1,139 @@
+SRC_DIR = src
+LIB_DIR = $(SRC_DIR)/my
+BUILD_DIR = build
+
+# Put your Arduino serial port name on your PC
+# It should be something like /dev/ttyxxxx in Linux and something like COMx in Windows
+ARDUINO_SERIAL_PORT_NAME = COM10
+
+# The CC variable typically represents the C compiler that will be used during the
+# compilation process. By assigning avr-gcc to CC, it indicates that the avr-gcc
+# compiler is being used for compiling the C source files in the project.
+
+CC = avr-gcc
+
+# Compiler Options:
+
+# -Wall:
+# This flag enables a set of warning messages during compilation. It helps to
+# catch potential issues or suspicious code constructs that might lead to bugs
+# or undefined behavior.
+
+# -Os:
+# This flag optimizes the generated code for size. It instructs the compiler to
+# perform various optimizations that reduce the code size, although it may have a
+# slight impact on execution speed. This is often desirable for resource-constrained
+# microcontrollers where minimizing code size is important.
+
+# -mmcu=atmega328p:
+# This flag specifies the target microcontroller for which the code is being compiled.
+# In this case, it is set to the Atmega328P microcontroller. The compiler uses this
+# information to set the appropriate processor-specific options and generate code
+# tailored for the specified microcontroller.
+
+# -std=gnu99:
+# This flag sets the C language standard to C99. It instructs the compiler to use the C99
+# standard for language features and syntax. The C99 standard introduced several new
+# features and improvements over previous versions of the C language.
+
+CFLAGS = -Wall -Os -mmcu=atmega328p -std=gnu99
+
+# Linker Options
+
+# -Wl,-u,vfprintf:
+# This flag passes the -u vfprintf option to the linker ($(CC)). It specifies that the symbol
+# vfprintf should be treated as an unresolved symbol, allowing it to be resolved by the standard
+# library implementation. This is necessary for enabling formatted printing functions like printf
+# to work correctly.
+
+# -lprintf_flt:
+# This flag instructs the linker to link against the printf_flt library. This library provides
+# support for floating-point formatting in the printf function. It includes the necessary code to
+# handle floating-point conversions and formatting.
+
+# -lm:
+# This flag links against the math library (libm). The math library provides mathematical
+# functions such as sin, cos, sqrt, etc. The -lm flag is necessary when using mathematical operations
+# or functions in your code.
+
+LDFLAGS = -Wl,-u,vfprintf -lprintf_flt -lm
+
+# Define MK_DIR based on the operating system or environment in which the Makefile is being executed
+ifdef SystemRoot
+	MK_DIR = mkdir
+else
+	ifeq ($(shell uname), Linux)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), CYGWIN)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), MINGW32)
+		MK_DIR = mkdir -pv
+	endif
+
+	ifeq ($(shell uname | cut -d _ -f 1), MINGW64)
+		MK_DIR = mkdir -pv
+	endif
+endif
+
+all: program.hex
+
+# create the build directory
+$(BUILD_DIR):
+	$(MK_DIR) $(BUILD_DIR)
+
+# create the static library for serial_port.c
+libserial_port.a: $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/serial_port.o -c $(LIB_DIR)/serial_port.c
+	avr-ar rcs $(BUILD_DIR)/libserial_port.a $(BUILD_DIR)/serial_port.o
+
+# create the static library for precise_timing.c
+libprecise_timing.a: $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/precise_timing.o -c $(LIB_DIR)/precise_timing.c
+	avr-ar rcs $(BUILD_DIR)/libprecise_timing.a $(BUILD_DIR)/precise_timing.o
+	
+# create the object file for main.c
+main.o: $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/main.o -c $(SRC_DIR)/main.c
+
+# build the program in hex format for Atmega328P
+program.hex: $(BUILD_DIR) main.o libserial_port.a libprecise_timing.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/program.elf $(BUILD_DIR)/main.o $(BUILD_DIR)/libserial_port.a $(BUILD_DIR)/libprecise_timing.a
+	avr-objcopy -j .text -j .data -O ihex $(BUILD_DIR)/program.elf $(BUILD_DIR)/program.hex
+	avr-size --format=avr --mcu=atmega328p $(BUILD_DIR)/program.elf
+
+# upload the built program (hex file) to Atmega328P using USBasp
+upload: program.hex
+	avrdude -c arduino -p m328p -P $(ARDUINO_SERIAL_PORT_NAME) -b 115200 -U flash:w:$(BUILD_DIR)/program.hex
+# avrdude:
+# The command-line tool used for programming AVR microcontrollers.
+
+# -c arduino:
+# Specifies the programmer type. In this case, it indicates that an Arduino board
+# is being used as the programmer. The specific programmer type may vary depending
+# on the hardware setup.
+
+# -p m328p:
+# Specifies the target AVR microcontroller model. Here, it's set to m328p, which corresponds
+# to the ATmega328P microcontroller.
+
+# -P $(ARDUINO_SERIAL_PORT_NAME):
+# Specifies the communication port to which the programmer (Arduino board) is connected.
+# The actual port number may vary depending on your system configuration.
+
+# -b 115200:
+# Sets the baud rate for communication between the computer and the programmer. The baud rate
+# is set to 115200 bits per second in this case. Adjust this value based on your specific setup
+# if needed.
+
+# -U flash:w:$(BUILD_DIR)/program.hex:
+# Specifies the action to be performed by avrdude. In this case, it is set to
+# write the contents of the program.hex file to the flash memory (flash:w:) of the microcontroller.
+# The program.hex file is located in the build directory.
+
+# Remove build directory with all built files
+clean:
+	rm -rf $(BUILD_DIR) 
