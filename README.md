@@ -73,7 +73,7 @@ Capacitance meter for 470uF to 18pF range with the highest accuracy for small ca
 
 - [How to Make an Arduino Capacitance Meter](https://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/)
 - [RC Charging Circuit](https://www.electronics-tutorials.ws/rc/rc_1.html)
-- [RC Discharging Circuit](https://www.electronics-tutorials.ws/rc/rc_2.html)
+- [Capacitive Voltage Divider](http://www.learningaboutelectronics.com/Articles/Capacitive-voltage-divider.php)
 
 ## Resources
 

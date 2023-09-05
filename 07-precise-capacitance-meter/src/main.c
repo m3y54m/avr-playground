@@ -95,6 +95,7 @@ int main(void)
     // For capacitors smaller that 1064 pF ~ 1nF
     if (adc_reading < 1000)
     {
+      // Capacitive Voltage Divider equation
       float capacitance = (float)adc_reading * STRAY_CAP_TO_GND / (float)(MAX_ADC_VALUE - adc_reading);
 
       printf("Capacitance Value = %.3f pF (%u)\r\n", capacitance, adc_reading);
@@ -138,7 +139,7 @@ int main(void)
 
       adc_reading = adc_read(CAP_P);
 
-      // Capacitor charge equation:
+      // Capacitor Charging equation:
       // C = -t / (R * ln(1 - Vc / Vs))
       // Vc: voltage across the capacitor
       // Vs: supply voltage (max voltage)
