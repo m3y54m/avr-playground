@@ -9,7 +9,7 @@ TXD (PD1) ---> TTL Serial Port RX
 // NOTE: put this before other includes
 #include "my/project_config.h"
 
-#include <avr/pgmspace.h>
+#include <avr/io.h>
 #include "my/serial_port.h"
 #include <util/delay.h>
 

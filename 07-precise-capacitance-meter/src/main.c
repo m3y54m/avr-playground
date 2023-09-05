@@ -13,7 +13,7 @@ ADC0 (PC0) <--- Unknown Capacitor Negative (-) Lead
 // NOTE: put this before other includes
 #include "my/project_config.h"
 
-#include <avr/pgmspace.h>
+#include <avr/io.h>
 #include "my/serial_port.h"
 #include "my/precise_timing.h"
 #include <math.h>

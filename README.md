@@ -62,7 +62,7 @@ Emulate a 20PPR incremental (quadrature) rotary encoder using TIMER0 and TIMER2 
 
 ## [Measure VCC using ADC](06-adc-measure-vcc)
 
-Use ADC to measure VCC voltage without using any I/O pin or external component.
+Use ADC to measure VCC voltage without using any I/O pin or any external component.
 
 - [AN2447: Measure VCC/Battery Voltage Without Using I/O Pin on tinyAVR and megaAVR](https://ww1.microchip.com/downloads/en/Appnotes/00002447A.pdf)
 - [AVR126: ADC of megaAVR® in Single-Ended Mode](http://ww1.microchip.com/downloads/en/AppNotes/00002538A.pdf)
@@ -72,8 +72,19 @@ Use ADC to measure VCC voltage without using any I/O pin or external component.
 Capacitance meter for 470uF to 18pF range with the highest accuracy for small capacitors.
 
 - [How to Make an Arduino Capacitance Meter](https://www.circuitbasics.com/how-to-make-an-arduino-capacitance-meter/)
-- [RC Charging Circuit](https://www.electronics-tutorials.ws/rc/rc_1.html)
 - [Capacitive Voltage Divider](http://www.learningaboutelectronics.com/Articles/Capacitive-voltage-divider.php)
+- [RC Charging Circuit](https://www.electronics-tutorials.ws/rc/rc_1.html)
+
+# [Low Power Control of an LED using a Button](08-sleep-mode)
+
+Exits Sleep on button press, turns on an LED and goes back to Sleep. On button release, exits Sleep, turns off
+the LED and goes back to Sleep.
+
+- [AVR® Low Power Sleep Modes](https://microchipdeveloper.com/8avr:avrsleep)
+- [Getting Started with GPIO](https://ww1.microchip.com/downloads/en/Appnotes/90003229A.pdf)
+- [AVR®: Using Pin Change Interrupts](https://microchipdeveloper.com/8avr:pin-change-interrupts)
+- [<avr/interrupt.h>: Interrupts](https://www.nongnu.org/avr-libc/user-manual/group__avr__interrupts.html)
+
 
 ## Resources
 
@@ -88,4 +99,5 @@ Capacitance meter for 470uF to 18pF range with the highest accuracy for small ca
 - [avr-libc - How to Build a Library ](https://www.nongnu.org/avr-libc/user-manual/library.html)
 - [avr-millis-function](https://github.com/monoclecat/avr-millis-function)
 - [Nested Interrupts](https://ucexperiment.wordpress.com/2013/05/20/nested-interrupts/)
+- [avr_insights](https://github.com/MicrochipTech/avr_insights)
 
