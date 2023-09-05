@@ -26,7 +26,9 @@ Blinky is the "Hello World!" of embedded systems :)
 
 Redirect STDIO streams to UART0 input and output so that you can write to serial port using `printf()` and read using `scanf()`
 
-**Note that if you are using Arduino Uno / Nano board, you do not need any external serial port to communicate with Atmega328, you can use the Arduino USB serial port to test the program. Just connect your board using USB port to your PC.**
+**Note 1: The implementation of printf() and scanf() is about 5KB in size, which is a problem for memory constrained systems.**
+
+**Note 2: that if you are using Arduino Uno / Nano board, you do not need any external serial port to communicate with Atmega328, you can use the Arduino USB serial port to test the program. Just connect your board using USB port to your PC.**
 
 ## [Precise Timing](02-precise-timing)
 

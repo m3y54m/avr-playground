@@ -3,6 +3,10 @@
 RXD (PD0) <--- TTL Serial Port TX
 TXD (PD1) ---> TTL Serial Port RX
       GND <--- TTL Serial Port GND
+
+ADC2 (PC2) <--- Unknown Capacitor Positive (+) Lead
+ADC0 (PC0) <--- Unknown Capacitor Negative (-) Lead
+
 */
 
 // Project common config and definitions
@@ -14,24 +18,20 @@ TXD (PD1) ---> TTL Serial Port RX
 #include "my/precise_timing.h"
 #include <math.h>
 
-// Calibrated value for 1.1V band-gap reference voltage
-#define CALIBRATED_1V1_VBG 1.088f
+// Helper macros for bit manipulation
+#define bit_set(value, bit) ((value) |= (1 << (bit)))
+#define bit_clear(value, bit) ((value) &= ~(1 << (bit)))
+#define bit_toggle(value, bit) ((value) ^= (1 << (bit)))
+#define bit_read(value, bit) (((value) >> (bit)) & 0x01)
+#define bit_write(value, bit, bitvalue) ((bitvalue) ? bit_set(value, bit) : bit_clear(value, bit))
 
 // Capacitor pins
 #define CAP_P PC2 // ADC2 (Positive Lead)
 #define CAP_N PC0 // ADC0 (Negative Lead)
 
-#define DDRC_OUTPUT(x) (DDRC |= (1 << x))
-#define DDRC_INPUT(x) (DDRC &= ~(1 << x))
-
-#define PORTC_BIT_SET(x) (PORTC |= (1 << x))
-#define PORTC_BIT_CLEAR(x) (PORTC &= ~(1 << x))
-
-#define PINC_READ(x) ((PINC >> x) & 0x01)
-
-// Calibrated internal stray capacitance of ADC input in Atmega328
+// Calibrated value for internal stray capacitance of ADC input in Atmega328
 #define STRAY_CAP_TO_GND 24.48 // in pico-farad
-// Calibrated internal pull-up resistor value in Atmega328
+// Calibrated value for internal pull-up resistor in Atmega328
 #define R_PULLUP 34.8f // in kilo-ohm
 
 #define MAX_ADC_VALUE 1023
@@ -79,18 +79,18 @@ int main(void)
   while (1)
   {
     // Config CAP_N as input
-    DDRC_INPUT(CAP_N);
+    bit_clear(DDRC, CAP_N);
 
     // Config CAP_P as output
-    DDRC_OUTPUT(CAP_P);
+    bit_set(DDRC, CAP_P);
     // Write 1 to CAP_P
-    PORTC_BIT_SET(CAP_P);
+    bit_set(PORTC, CAP_P);
     unsigned int adc_reading = adc_read(CAP_N);
     // Write 0 to CAP_P
-    PORTC_BIT_CLEAR(CAP_P);
+    bit_clear(PORTC, CAP_P);
 
     // Config CAP_N as output
-    DDRC_OUTPUT(CAP_N);
+    bit_set(DDRC, CAP_N);
 
     // For capacitors smaller that 1064 pF ~ 1nF
     if (adc_reading < 1000)
@@ -104,9 +104,9 @@ int main(void)
       precise_delay_ms(1);
 
       // Config CAP_P as input
-      DDRC_INPUT(CAP_P);
+      bit_clear(DDRC, CAP_P);
       // Enable pull-up resistor on CAP_P
-      PORTC_BIT_SET(CAP_P);
+      bit_set(PORTC, CAP_P);
 
       int digital_value_of_cap_p;
       unsigned long discharge_time_us;
@@ -116,7 +116,7 @@ int main(void)
       // Wait until digital value of CAP_P reads as logic 1
       while (1)
       {
-        digital_value_of_cap_p = PINC_READ(CAP_P); // Read CAP_P
+        digital_value_of_cap_p = bit_read(PINC, CAP_P); // Read CAP_P
 
         unsigned long t2 = micros();
         discharge_time_us = (t2 > t1) ? (t2 - t1) : (t1 - t2);
@@ -134,7 +134,7 @@ int main(void)
       }
 
       // Disable pull-up on CAP_P
-      PORTC_BIT_CLEAR(CAP_P);
+      bit_clear(PORTC, CAP_P);
 
       adc_reading = adc_read(CAP_P);
 
@@ -160,22 +160,22 @@ int main(void)
       printf(digital_value_of_cap_p == 1 ? "Normal" : "HighVal");
       printf(", discharge_time_us= %lu us, ADC= %u)\r\n", discharge_time_us, adc_reading);
 
-      // Safely discharge the capacitor
+      // Discharge the capacitor
 
       // Write 1 to CAP_N
-      PORTC_BIT_SET(CAP_N);
+      bit_set(PORTC, CAP_N);
 
       int discharge_time_ms = (int)(discharge_time_us / 1000L) * 5;
 
       precise_delay_ms(discharge_time_ms);
 
       // Config CAP_P as output
-      DDRC_OUTPUT(CAP_P);
+      bit_set(DDRC, CAP_P);
       // Write 0 to CAP_P
-      PORTC_BIT_CLEAR(CAP_P);
+      bit_clear(PORTC, CAP_P);
 
       // Write 0 to CAP_N
-      PORTC_BIT_CLEAR(CAP_N);
+      bit_clear(PORTC, CAP_N);
     }
 
     // Wait until this iteration of main loop takes 1000 ms (1 second)
