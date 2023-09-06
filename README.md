@@ -75,7 +75,7 @@ Capacitance meter for 470uF to 18pF range with the highest accuracy for small ca
 - [Capacitive Voltage Divider](http://www.learningaboutelectronics.com/Articles/Capacitive-voltage-divider.php)
 - [RC Charging Circuit](https://www.electronics-tutorials.ws/rc/rc_1.html)
 
-# [Low Power Control of an LED using a Button](08-sleep-mode)
+## [Low Power Control of an LED using a Button](08-sleep-mode)
 
 Exits Sleep on button press, turns on an LED and goes back to Sleep. On button release, exits Sleep, turns off
 the LED and goes back to Sleep.
