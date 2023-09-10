@@ -75,7 +75,7 @@ Capacitance meter for 470uF to 18pF range with the highest accuracy for small ca
 - [Capacitive Voltage Divider](http://www.learningaboutelectronics.com/Articles/Capacitive-voltage-divider.php)
 - [RC Charging Circuit](https://www.electronics-tutorials.ws/rc/rc_1.html)
 
-# [Sleep Mode](08-sleep-mode)
+## [Sleep Mode](08-sleep-mode)
 
 Low power control of an LED using a button. Exits Sleep on button press, turns on an LED and goes back to Sleep. On button release, exits Sleep, turns off
 the LED and goes back to Sleep.
@@ -85,7 +85,7 @@ the LED and goes back to Sleep.
 - [AVR®: Using Pin Change Interrupts](https://microchipdeveloper.com/8avr:pin-change-interrupts)
 - [<avr/interrupt.h>: Interrupts](https://www.nongnu.org/avr-libc/user-manual/group__avr__interrupts.html)
 
-# [Watchdog Timer (Software Reset)](09-watchdog-timer)
+## [Watchdog Timer (Software Reset)](09-watchdog-timer)
 
 Testing software reset using watchdog timer. Configured watchdog timer for a timeout of 4 seconds. Reset the watchdog timer 5 times when it reaches 3.9 seconds to avoid triggering a MCU reset. Eventually, triggered the MCU reset by allowing the watchdog timer to reach its timeout.
 
@@ -93,7 +93,7 @@ Testing software reset using watchdog timer. Configured watchdog timer for a tim
 - [<avr/wdt.h>: Watchdog timer handling](https://www.nongnu.org/avr-libc/user-manual/group__avr__watchdog.html)
 - [AVR132: Using the Enhanced Watchdog Timer](https://www.microchip.com/en-us/application-notes/avr132)
 
-# [Reset Sources](10-reset-sources)
+## [Reset Sources](10-reset-sources)
 
 Determining the reset source (cause) of the MCU during startup.
 
