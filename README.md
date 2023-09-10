@@ -90,6 +90,7 @@ the LED and goes back to Sleep.
 Testing software reset using watchdog timer. Configured watchdog timer for a timeout of 4 seconds. Reset the watchdog timer 5 times when it reaches 3.9 seconds to avoid triggering a MCU reset. Eventually, triggered the MCU reset by allowing the watchdog timer to reach its timeout.
 
 - [Software Reset](https://microchip.my.site.com/s/article/Software-Reset)
+- [AVR® Watchdog Timer](https://microchipdeveloper.com/8avr:avrwdt)
 - [<avr/wdt.h>: Watchdog timer handling](https://www.nongnu.org/avr-libc/user-manual/group__avr__watchdog.html)
 - [AVR132: Using the Enhanced Watchdog Timer](https://www.microchip.com/en-us/application-notes/avr132)
 
@@ -97,6 +98,8 @@ Testing software reset using watchdog timer. Configured watchdog timer for a tim
 
 Determining the reset source (cause) of the MCU during startup.
 
+- [AVR Reset Sources](https://microchipdeveloper.com/8avr:avrreset)
+- [AVR® Reset Sources Example Project](https://microchipdeveloper.com/8avr:resetexample)
 
 ## Resources
 
