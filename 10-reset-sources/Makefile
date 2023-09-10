@@ -38,6 +38,26 @@ CC = avr-gcc
 
 CFLAGS = -Wall -Os -mmcu=atmega328p -std=gnu99
 
+# Linker Options
+
+# -Wl,-u,vfprintf:
+# This flag passes the -u vfprintf option to the linker (avr-gcc). It specifies that the symbol
+# vfprintf should be treated as an unresolved symbol, allowing it to be resolved by the standard
+# library implementation. This is necessary for enabling formatted printing functions like printf
+# to work correctly.
+
+# -lprintf_flt:
+# This flag instructs the linker to link against the printf_flt library. This library provides
+# support for floating-point formatting in the printf function. It includes the necessary code to
+# handle floating-point conversions and formatting.
+
+# -lm:
+# This flag links against the math library (libm). The math library provides mathematical
+# functions such as sin, cos, sqrt, etc. The -lm flag is necessary when using mathematical operations
+# or functions in your code.
+
+LDFLAGS = -Wl,-u,vfprintf -lprintf_flt -lm
+
 # Define MK_DIR based on the operating system or environment in which the Makefile is being executed
 ifdef SystemRoot
 	MK_DIR = mkdir
@@ -65,19 +85,24 @@ all: program.hex
 $(BUILD_DIR):
 	$(MK_DIR) $(BUILD_DIR)
 
+# create the static library for serial_port.c
+libserial_port.a: $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $(BUILD_DIR)/serial_port.o -c $(LIB_DIR)/serial_port.c
+	avr-ar rcs $(BUILD_DIR)/libserial_port.a $(BUILD_DIR)/serial_port.o
+
 # create the object file for main.c
 main.o: $(BUILD_DIR)
 	$(CC) $(CFLAGS) -o $(BUILD_DIR)/main.o -c $(SRC_DIR)/main.c
 
 # build the program in hex format for Atmega328P
-program.hex: $(BUILD_DIR) main.o
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/program.elf $(BUILD_DIR)/main.o
+program.hex: $(BUILD_DIR) main.o libserial_port.a
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $(BUILD_DIR)/program.elf $(BUILD_DIR)/main.o $(BUILD_DIR)/libserial_port.a
 	avr-objcopy -j .text -j .data -O ihex $(BUILD_DIR)/program.elf $(BUILD_DIR)/program.hex
 	avr-size --format=avr --mcu=atmega328p $(BUILD_DIR)/program.elf
 
 # upload the built program (hex file) to Atmega328P
 upload: program.hex
-	avrdude -c arduino -p m328p -P $(ARDUINO_SERIAL_PORT_NAME) -b 115200 -U flash:w:$(BUILD_DIR)/program.hex
+	avrdude -c ft232h -p m328p -U flash:w:$(BUILD_DIR)/program.hex
 # avrdude:
 # The command-line tool used for programming AVR microcontrollers.
 

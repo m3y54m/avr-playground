@@ -100,7 +100,7 @@ program.hex: $(BUILD_DIR) main.o libserial_port.a
 	avr-objcopy -j .text -j .data -O ihex $(BUILD_DIR)/program.elf $(BUILD_DIR)/program.hex
 	avr-size --format=avr --mcu=atmega328p $(BUILD_DIR)/program.elf
 
-# upload the built program (hex file) to Atmega328P using USBasp
+# upload the built program (hex file) to Atmega328P
 upload: program.hex
 	avrdude -c arduino -p m328p -P $(ARDUINO_SERIAL_PORT_NAME) -b 115200 -U flash:w:$(BUILD_DIR)/program.hex
 # avrdude:

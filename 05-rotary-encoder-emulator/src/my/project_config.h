@@ -8,6 +8,6 @@
 // CPU main clock frequency in Hz
 #define F_CPU 16000000UL
 // UART baudrate
-#define BAUD 9600UL
+#define BAUD 115200UL
 
 #endif // __PROJECT_CONFIG_H__
